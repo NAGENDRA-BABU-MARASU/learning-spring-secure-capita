@@ -8,7 +8,7 @@
 
 /*
  * --- General rules
- * Use underscore_names instead of camel case
+ * Use underscore_names instead of camelCase
  * Table names should be plural
  * Spell out fields (item_id instead of id)
  * Don't use ambigous column names
@@ -19,7 +19,7 @@
 CREATE SCHEMA IF NOT EXISTS securecapita;
 
 SET NAMES 'UTF8MB4';
-SET TIME_ZONE = 'India';
+--SET TIME_ZONE = 'India';
 SET TIME_ZONE = '+5:30';
 
 USE securecapita;
@@ -41,7 +41,7 @@ CREATE TABLE users
     non_locked      BOOLEAN DEFAULT TRUE,
     using_mfa       BOOLEAN DEFAULT FALSE,
     created_at      DATETIME DEFAULT CURRENT_TIMESTAMP,
-    image_url       VARCHAR(50) DEFAULT 'https://cdn-icons-png.flaticon.com/512/149/149071.png',
+    image_url       VARCHAR(100) DEFAULT 'https://cdn-icons-png.flaticon.com/512/149/149071.png',
     CONSTRAINT UQ_Users_Email UNIQUE(email)
 );
 
@@ -62,7 +62,7 @@ CREATE TABLE userroles
 (
     id              BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     user_id         BIGINT UNSIGNED NOT NULL,
-    role_id         BIGINT UNSIGNED NOT NULL
+    role_id         BIGINT UNSIGNED NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (role_id) REFERENCES roles (id) ON DELETE RESTRICT ON UPDATE CASCADE,
     CONSTRAINT  UQ_Userroles_User_Id UNIQUE (user_id)
@@ -89,7 +89,7 @@ CREATE TABLE userevents
     ip_address      VARCHAR(100) DEFAULT NULL,
     created_at      DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id)  REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (event_id) REFERENCES events (id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    FOREIGN KEY (event_id) REFERENCES events (id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 DROP TABLE IF EXISTS accountverifications;
